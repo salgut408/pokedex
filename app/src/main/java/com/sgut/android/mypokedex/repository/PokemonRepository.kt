@@ -1,6 +1,6 @@
 package com.sgut.android.mypokedex.repository
 
-import com.sgut.android.mypokedex.PokemonApiResponses
+import com.sgut.android.mypokedex.Pokemon
 import com.sgut.android.mypokedex.PokemopnListApiResponses
 import com.sgut.android.mypokedex.data.remote.PokeApi
 import com.sgut.android.mypokedex.util.Resource
@@ -20,7 +20,7 @@ class PokemonRepository @Inject constructor(
         return Resource.Success(response)
     }
 
-    suspend fun getPokemonInfo(pokemonName: String): Resource<PokemonApiResponses> {
+    suspend fun getPokemonInfo(pokemonName: String): Resource<Pokemon> {
         val response = try {
             api.getPokemonInfo(pokemonName)
         } catch (e: Exception) {

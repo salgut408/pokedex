@@ -1,6 +1,6 @@
 package com.sgut.android.mypokedex.data.remote
 
-import com.sgut.android.mypokedex.PokemonApiResponses
+import com.sgut.android.mypokedex.Pokemon
 import com.sgut.android.mypokedex.PokemopnListApiResponses
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -16,6 +16,6 @@ interface PokeApi {
     @GET("pokemon/{name}")
     suspend fun getPokemonInfo (
         @Path("name") name: String,
-    ): PokemonApiResponses
+    ): Pokemon
 
 }

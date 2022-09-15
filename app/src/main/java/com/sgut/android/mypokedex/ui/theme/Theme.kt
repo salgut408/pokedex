@@ -8,7 +8,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 
 
-import androidx.compose.ui.graphics.Color
 
 private val DarkColorPalette = darkColors(
     primary = Color.Yellow,
@@ -36,7 +35,7 @@ fun MyPokedexTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composa
 
     MaterialTheme(
         colors = colors,
-        typography = Typography,
+//        typography = Typography,
         shapes = Shapes,
         content = content
     )

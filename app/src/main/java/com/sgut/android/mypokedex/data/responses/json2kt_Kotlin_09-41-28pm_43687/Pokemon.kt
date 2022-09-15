@@ -3,7 +3,7 @@ package com.sgut.android.mypokedex
 import com.google.gson.annotations.SerializedName
 
 
-data class PokemonApiResponses (
+data class Pokemon (
 
   @SerializedName("abilities"                ) var abilities              : ArrayList<Abilities>   = arrayListOf(),
   @SerializedName("base_experience"          ) var baseExperience         : Int?                   = null,
@@ -21,7 +21,7 @@ data class PokemonApiResponses (
   @SerializedName("species"                  ) var species                : Species?               = Species(),
   @SerializedName("sprites"                  ) var sprites                : Sprites?               = Sprites(),
   @SerializedName("stats"                    ) var stats                  : ArrayList<Stats>       = arrayListOf(),
-  @SerializedName("types"                    ) var types                  : ArrayList<Types>       = arrayListOf(),
+  @SerializedName("types"                    ) var types                  : List<Types>       = listOf(),
   @SerializedName("weight"                   ) var weight                 : Int?                   = null
 
 )
