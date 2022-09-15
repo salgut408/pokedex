@@ -1,5 +1,6 @@
 package com.sgut.android.mypokedex.pokemonlist
 
+import androidx.compose.animation.fadeIn
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -197,18 +198,8 @@ fun PokedexEntry(
                 )
             }
     ) {
+
         Column() {
-//
-//    CoilImage (
-//        request = ImageRequest.Builder(LocalContext.current)
-//            .data(entry.imgUrl)
-//            .target {
-//                viewModel.calcDominantColor(it) { color ->
-//                    dominantColor = color
-//                }
-//            }
-//            .build()
-//            )
 
             val painter = rememberAsyncImagePainter(
                 model = ImageRequest.Builder(LocalContext.current)
@@ -216,19 +207,24 @@ fun PokedexEntry(
                     .size(125)
 
                     .build()
-
             )
             if(painter.state is AsyncImagePainter.State.Success) {
 
+
             }
+            entry.imgUrl?.let { viewModel.fetchColors(it, LocalContext.current,) { color ->
+                dominantColor = color
+            } }
             Image(
                 painter = painter ,
                 contentDescription = entry.pokemonName,
+
             modifier = Modifier
                 .size(120.dp)
                 .align(CenterHorizontally)
 
             )
+
 
 
 
@@ -266,8 +262,8 @@ fun PokedexRow(
                 modifier = Modifier.weight(1f)
             )
 
-
             Spacer(modifier = Modifier.width(16.dp))
+
             if (entries.size >= rowIndex * 2 + 2) {
                 PokedexEntry(entry = entries[rowIndex * 2 + 1],
                     navController = navController,

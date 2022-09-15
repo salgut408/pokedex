@@ -1,5 +1,6 @@
 package com.sgut.android.mypokedex.pokemonlist
 
+import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
@@ -10,6 +11,10 @@ import androidx.compose.ui.text.capitalize
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.palette.graphics.Palette
+import coil.Coil
+import coil.imageLoader
+import coil.request.ImageRequest
+import coil.request.SuccessResult
 import com.sgut.android.mypokedex.data.models.PokedexListEntry
 import com.sgut.android.mypokedex.repository.PokemonRepository
 import com.sgut.android.mypokedex.util.Constants.PAGE_SIZE
@@ -50,7 +55,7 @@ class PokemonListViewModel @Inject constructor(
                             entry.url!!.takeLastWhile { it.isDigit() }
                         }
                         val url = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${number}.png"
-                        PokedexListEntry(entry.name!!,url, number.toInt() )
+                        PokedexListEntry(entry.name?.capitalize(Locale.ROOT)!!,url, number.toInt() )
                     }
                     curPage++
 
@@ -74,6 +79,23 @@ class PokemonListViewModel @Inject constructor(
         Palette.from(bmp).generate() { palette ->
             palette?.dominantSwatch?.rgb?.let { colorValue ->
                 onFinish(Color(colorValue))
+            }
+        }
+    }
+
+    fun fetchColors(url: String, context: Context, onCalculated: (Color) -> Unit) {
+        viewModelScope.launch {
+            val req = ImageRequest.Builder(context)
+                .data(url)
+                .allowHardware(false)
+                .build()
+
+            val result = req.context.imageLoader.execute(req)
+
+            if(result is SuccessResult) {
+                calcDominantColor(result.drawable) { color ->
+                    onCalculated(color)
+                }
             }
         }
     }
